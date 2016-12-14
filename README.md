@@ -5,7 +5,7 @@ OAuth Library for easy Authentication and Querying, mainly for web server authen
 https://jitpack.io/#adrat205/Java-Discord-OAuth-Library/d5bb252dce
 
 First, create an OAuthManager. You need to pass a BotSettings object to the manager.
-If you want a correct `User-Agent`, pass the OAuthSettings object to the manager constructor as well, like this.
+# YOU MUST CREATE BOTH BotSettings AND OAuthSettings. Your OAuthSettings redirect URL MUST BE the same as defined in your application. HTTP OR HTTPS IS REQUIRED!!!!!
 
 ```java
 
