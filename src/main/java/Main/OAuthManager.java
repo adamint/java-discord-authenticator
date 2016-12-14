@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,11 +21,6 @@ public class OAuthManager {
     private Settings.OAuthSettings OAuthSettings;
     protected BotSettings botSettings;
 
-    public static void main(String[] args) {
-        Settings.OAuthSettings oAuthSettings = new OAuthSettings("MyBot", "http://mywebsite.com", "http://yourredirecturl.com", "1.0 BETA");
-        BotSettings botSettings = new BotSettings("clientId", "clientSecret", "botToken");
-    }
-    
     public OAuthManager(BotSettings botSettings) {
         OAuthSettings = new OAuthSettings();
         this.botSettings = botSettings;
@@ -153,17 +149,27 @@ public class OAuthManager {
 
     private Token getTokenResponse(String code) throws OAuthException {
         try {
+            JSONObject obj = new JSONObject();
+            obj.put("client_id", botSettings.getClientId())
+                    .put("client_secret", botSettings.getClientSecret())
+                    .put("grant_type", "authorization_code")
+                    .put("redirect_uri", OAuthSettings.getRedirectUrl())
+                    .put("code", code);
             HttpResponse<String> tokenHttpResponse = Unirest.post("https://discordapp.com/api/oauth2/token")
                     .header("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW")
                     .header("authorization", "Bearer " + code)
                     .header("cache-control", "no-cache")
-                    .body("------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"client_id\"\r\n\r\n" + botSettings.getClientId() + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"client_secret\"\r\n\r\n" + botSettings.getClientSecret() + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"grant_type\"\r\n\r\nauthorization_code\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"redirect_uri\"\r\n\r\n" + OAuthSettings.getRedirectUrl() + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"code\"\r\n\r\n" + code + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--")
+                    .body("------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"client_id\"\r\n\r\n" + botSettings.getClientId() + "" +
+                            "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"client_secret\"\r\n\r\n" + botSettings.getClientSecret() + "" +
+                            "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"grant_type\"\r\n\r\nauthorization_code" +
+                            "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"redirect_uri\"\r\n\r\n" + OAuthSettings.getRedirectUrl() + "" +
+                            "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"code\"\r\n\r\n" + code + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--")
                     .asString();
             if (tokenHttpResponse.getStatus() == 200) {
                 return gson.fromJson(tokenHttpResponse.getBody(), Token.class);
             }
             else if (tokenHttpResponse.getStatus() == 401) {
-                throw new OAuthException("Unauthorized. Make sure that the provided code is valid, then try again.");
+                throw new OAuthException("Unauthorized. Make sure that the provided code is valid, then try again." + tokenHttpResponse.getBody());
             }
             else {
                 throw new OAuthException("Error. HTTP Response Code: " + tokenHttpResponse.getStatus() + ": " + tokenHttpResponse.getStatusText());
