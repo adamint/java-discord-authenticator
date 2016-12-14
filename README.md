@@ -2,7 +2,7 @@
 OAuth Library for easy Authentication and Querying, mainly for web server authentication.
 
 # Jitpack gradle link is below
-https://jitpack.io/#adrat205/Java-Discord-OAuth-Library/d5bb252dce
+https://jitpack.io/#adrat205/DiscordOAuth-Java/-SNAPSHOT
 
 First, create an OAuthManager. You need to pass a BotSettings object to the manager.
 # YOU MUST CREATE BOTH BotSettings AND OAuthSettings. Your OAuthSettings redirect URL MUST BE the same as defined in your application. HTTP OR HTTPS IS REQUIRED!!!!!
