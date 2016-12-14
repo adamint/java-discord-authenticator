@@ -20,6 +20,11 @@ public class OAuthManager {
     private Settings.OAuthSettings OAuthSettings;
     protected BotSettings botSettings;
 
+    public static void main(String[] args) {
+        Settings.OAuthSettings oAuthSettings = new OAuthSettings("MyBot", "http://mywebsite.com", "http://yourredirecturl.com", "1.0 BETA");
+        BotSettings botSettings = new BotSettings("clientId", "clientSecret", "botToken");
+    }
+    
     public OAuthManager(BotSettings botSettings) {
         OAuthSettings = new OAuthSettings();
         this.botSettings = botSettings;
@@ -117,6 +122,7 @@ public class OAuthManager {
             HttpResponse<String> scopeResponse = Unirest.get("https://discordapp.com/api" + route.getRouteURL())
                     .header("authorization", "Bearer " + token.getAccessToken())
                     .header("cache-control", "no-cache")
+                    .header("postman-token", "6f6ee334-ae23-74d4-be8f-03e224f95705")
                     .asString();
             if (scopeResponse.getStatus() == 200) return new Pair<>(route, scopeResponse.getBody());
             else if (scopeResponse.getStatus() == 401)
@@ -152,7 +158,7 @@ public class OAuthManager {
                     .header("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW")
                     .header("authorization", "Bearer " + code)
                     .header("cache-control", "no-cache")
-                    .body("------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"client_id\"\r\n\r\n247093143160356865\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"client_secret\"\r\n\r\ntCuWZ2vGQUialwqEeuW5mn4pE891sjuM\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"grant_type\"\r\n\r\nauthorization_code\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"redirect_uri\"\r\n\r\nhttp://ardentbot.tk/portal\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"code\"\r\n\r\n" + code + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--")
+                    .body("------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"client_id\"\r\n\r\n" + botSettings.getClientId() + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"client_secret\"\r\n\r\n" + botSettings.getClientSecret() + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"grant_type\"\r\n\r\nauthorization_code\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"redirect_uri\"\r\n\r\n" + OAuthSettings.getRedirectUrl() + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"code\"\r\n\r\n" + code + "\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--")
                     .asString();
             if (tokenHttpResponse.getStatus() == 200) {
                 return gson.fromJson(tokenHttpResponse.getBody(), Token.class);
