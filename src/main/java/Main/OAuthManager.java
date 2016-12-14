@@ -117,7 +117,6 @@ public class OAuthManager {
             HttpResponse<String> scopeResponse = Unirest.get("https://discordapp.com/api" + route.getRouteURL())
                     .header("authorization", "Bearer " + token.getAccessToken())
                     .header("cache-control", "no-cache")
-                    .header("postman-token", "6f6ee334-ae23-74d4-be8f-03e224f95705")
                     .asString();
             if (scopeResponse.getStatus() == 200) return new Pair<>(route, scopeResponse.getBody());
             else if (scopeResponse.getStatus() == 401)
@@ -135,7 +134,6 @@ public class OAuthManager {
             HttpResponse<String> scopeResponse = Unirest.get("https://discordapp.com/api" + route.getRouteURL())
                     .header("authorization", "Bot " + botToken)
                     .header("cache-control", "no-cache")
-                    .header("postman-token", "6f6ee334-ae23-74d4-be8f-03e224f95705")
                     .asString();
             if (scopeResponse.getStatus() == 200) return new Pair<>(route, scopeResponse.getBody());
             else if (scopeResponse.getStatus() == 401)
