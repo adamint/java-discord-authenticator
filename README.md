@@ -16,7 +16,7 @@ https://discordapp.com/oauth2/authorize?client_id=247093143160356865&scope=ident
 
 Your response type NEEDS to be code!
 
-Now, you have access to all of the convenience methods. However, you MUST make sure that the scopes you identified in your URL match the methods you are calling. For example, if you only have the `identify` scope, you cannot call `getUserWithEmail`, but you can call `getUser`, which returns an `Identify` object.
+Now, you have access to all of the convenience methods. However, you MUST make sure that the scopes you identified in your URL match the methods you are calling. For example, if you only have the `identify` scope, you cannot call `getUserWithEmail`, but you can call `getUser`, which returns an `Identify` object. **You will get an OAuthException if anything goes wrong, which should tell you what you have wrong.**
 
 `manager.getApplicationInfo()` returns an `Application` object with description, owner, name, etc. fields
 
