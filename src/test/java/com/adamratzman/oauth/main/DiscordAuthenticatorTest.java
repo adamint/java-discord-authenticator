@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DiscordAuthenticatorTest {
     DiscordAuthenticator authenticator = new DiscordAuthenticator.Builder()
             .setOauthConfiguration("https://ardentbot.com", "https://ardentbot.com/oauth")
-            .setBotConfiguration("Ardent", "414618291265601547", "kw856BzuFFUkAgt6y2xg5yzALwkrrs1N", "NDE0NjE4MjkxMjY1NjAxNTQ3.DbuKkw.RKqFArrDXxfHRvmobPh8pxRN-tY")
+            .setBotConfiguration("Ardent", "414618291265601547", "", "")
             .build();
     Token token = authenticator.getToken("ryA0jidaYF4aVIxEGfWhfPVM6UR3Ai");
     @Test
