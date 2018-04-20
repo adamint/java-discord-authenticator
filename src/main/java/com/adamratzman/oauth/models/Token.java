@@ -1,9 +1,10 @@
-package Models;
+package com.adamratzman.oauth.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Token {
     @SerializedName("access_token")
@@ -21,9 +22,6 @@ public class Token {
     @SerializedName("scope")
     @Expose
     private String scope;
-
-    public Token() {
-    }
 
     public Token(String accessToken, String tokenType, Integer expiresIn, String refreshToken, String scope) {
         super();
@@ -50,15 +48,15 @@ public class Token {
         return refreshToken;
     }
 
-    public ArrayList<Scope.Routes> getScopes() {
-        ArrayList<Scope.Routes> scopes = new ArrayList<>();
+    public ArrayList<DiscordScope> getScopes() {
+        ArrayList<DiscordScope> scopes = new ArrayList<>();
         String[] args = scope.split(" ");
-        for (String arg : args) {
-            if (arg.equalsIgnoreCase("connections")) scopes.add(Scope.Routes.CONNECTIONS);
-            else if (arg.equalsIgnoreCase("identify")) scopes.add(Scope.Routes.IDENTIFY);
-            else if (arg.equalsIgnoreCase("email")) scopes.add(Scope.Routes.EMAIL);
-            else if (arg.equalsIgnoreCase("guilds")) scopes.add(Scope.Routes.GUILDS);
-        }
+        Arrays.stream(args).forEach(arg -> {
+            if (arg.equalsIgnoreCase("connections")) scopes.add(DiscordScope.CONNECTIONS);
+            else if (arg.equalsIgnoreCase("identify")) scopes.add(DiscordScope.IDENTIFY);
+            else if (arg.equalsIgnoreCase("email")) scopes.add(DiscordScope.EMAIL);
+            else if (arg.equalsIgnoreCase("guilds")) scopes.add(DiscordScope.GUILDS);
+        });
         return scopes;
     }
 }

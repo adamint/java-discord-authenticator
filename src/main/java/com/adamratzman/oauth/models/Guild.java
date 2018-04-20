@@ -1,10 +1,9 @@
-package Responses;
+package com.adamratzman.oauth.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Guild {
-
     @SerializedName("owner")
     @Expose
     private Boolean owner;
@@ -20,9 +19,6 @@ public class Guild {
     @SerializedName("name")
     @Expose
     private String name;
-
-    public Guild() {
-    }
 
     public Guild(Boolean owner, Integer permissions, String icon, String id, String name) {
         super();

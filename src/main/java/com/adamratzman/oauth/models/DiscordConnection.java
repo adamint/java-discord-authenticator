@@ -1,10 +1,9 @@
-package Responses;
+package com.adamratzman.oauth.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Connection {
-
+public class DiscordConnection {
     @SerializedName("visibility")
     @Expose
     private Integer visibility;
@@ -21,10 +20,7 @@ public class Connection {
     @Expose
     private String name;
 
-    public Connection() {
-    }
-
-    public Connection(Integer visibility, Boolean friendSync, String type, String id, String name) {
+    public DiscordConnection(Integer visibility, Boolean friendSync, String type, String id, String name) {
         super();
         this.visibility = visibility;
         this.friendSync = friendSync;
@@ -36,7 +32,6 @@ public class Connection {
     public boolean isVisible() {
         return visibility == 1;
     }
-
 
     public boolean getFriendSync() {
         return friendSync;

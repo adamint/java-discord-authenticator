@@ -1,32 +1,40 @@
-package Models;
+package com.adamratzman.oauth.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Owner {
-
+public class Email {
+    @SerializedName("id")
+    @Expose
+    private String id;
     @SerializedName("username")
     @Expose
     private String username;
     @SerializedName("discriminator")
     @Expose
     private String discriminator;
-    @SerializedName("id")
-    @Expose
-    private String id;
     @SerializedName("avatar")
     @Expose
     private String avatar;
+    @SerializedName("verified")
+    @Expose
+    private Boolean verified;
+    @SerializedName("email")
+    @Expose
+    private String email;
 
-    public Owner() {
-    }
-
-    public Owner(String username, String discriminator, String id, String avatar) {
+    public Email(String id, String username, String discriminator, String avatar, Boolean verified, String email) {
         super();
+        this.id = id;
         this.username = username;
         this.discriminator = discriminator;
-        this.id = id;
         this.avatar = avatar;
+        this.verified = verified;
+        this.email = email;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getUsername() {
@@ -37,12 +45,15 @@ public class Owner {
         return discriminator;
     }
 
-    public String getId() {
-        return id;
-    }
-
     public String getAvatar() {
         return avatar;
     }
 
+    public Boolean getVerified() {
+        return verified;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }

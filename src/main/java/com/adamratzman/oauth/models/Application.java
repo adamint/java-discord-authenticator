@@ -1,14 +1,12 @@
 
-package Responses;
+package com.adamratzman.oauth.models;
 
-import Models.Owner;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class Application {
-
     @SerializedName("description")
     @Expose
     private String description;
@@ -30,10 +28,6 @@ public class Application {
     @SerializedName("owner")
     @Expose
     private Owner owner;
-
-
-    public Application() {
-    }
 
     public Application(String description, String icon, String id, String name, List<Object> rpcOrigins, Integer flags, Owner owner) {
         super();
@@ -69,7 +63,6 @@ public class Application {
     public Integer getFlags() {
         return flags;
     }
-
 
     public Owner getOwner() {
         return owner;

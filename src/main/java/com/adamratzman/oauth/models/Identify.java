@@ -1,10 +1,9 @@
-package Responses;
+package com.adamratzman.oauth.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Identify {
-
     @SerializedName("username")
     @Expose
     private String username;
@@ -23,9 +22,6 @@ public class Identify {
     @SerializedName("discriminator")
     @Expose
     private String discriminator;
-
-    public Identify() {
-    }
 
     public Identify(String username, Boolean verified, Boolean mfaEnabled, String id, String avatar, String discriminator) {
         super();
